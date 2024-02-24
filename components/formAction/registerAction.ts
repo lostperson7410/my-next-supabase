@@ -1,8 +1,12 @@
 'use server'
 
+import { setUser } from "@/lib/features/userProfile/userProfileSlice";
 import { createClient } from "@/utils/supabase/server";
+    
+import { useDispatch } from 'react-redux';
 
 const supabase = createClient()
+
 
 export const registerUser = async (formDate : FormData) =>{
     const {data} = await supabase.auth.getUser()
@@ -23,9 +27,4 @@ export const registerUser = async (formDate : FormData) =>{
     // }).eq('id',data?.user?.id).select()
     const res = await supabase.auth.updateUser({data:{username: username,full_name: fullname}})
     return res?.data
-
-
-
-
-
 }
