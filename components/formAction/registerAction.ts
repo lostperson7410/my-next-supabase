@@ -23,9 +23,4 @@ export const registerUser = async (formDate : FormData) =>{
     // }).eq('id',data?.user?.id).select()
     const res = await supabase.auth.updateUser({data:{username: username,full_name: fullname}})
     return res?.data
-
-
-
-
-
 }
