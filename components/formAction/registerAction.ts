@@ -8,7 +8,9 @@ import { useDispatch } from 'react-redux';
 const supabase = createClient()
 
 
-export const registerUser = async (formDate : FormData) =>{
+export const registerUser = async (formDate : FormData) => {
+    console.log("🚀 ~ registerUser ~ formDate:", formDate)
+ 
     const {data} = await supabase.auth.getUser()
 
     console.log('this is server action');
@@ -25,6 +27,6 @@ export const registerUser = async (formDate : FormData) =>{
     //     username: username,
     //     updated_at: new Date(),
     // }).eq('id',data?.user?.id).select()
-    const res = await supabase.auth.updateUser({data:{username: username,full_name: fullname}})
-    return res?.data
+    // const res = await supabase.auth.updateUser({data:{username: username,full_name: fullname}})
+    // return res?.data
 }
