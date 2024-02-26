@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react';
 
-const Profile = (props) => {
-    const [selectedFile, setSelectedFile] = useState(null);
+const Profile = (props:any) => {
+    const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
     const handleFileChange = (event: { target: { files: any[]; }; }) => {
         const file = event.target.files[0];
