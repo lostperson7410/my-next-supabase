@@ -2,31 +2,27 @@
 
 import { setUser } from "@/lib/features/userProfile/userProfileSlice";
 import { createClient } from "@/utils/supabase/server";
-    
-import { useDispatch } from 'react-redux';
-
-const supabase = createClient()
-
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const registerUser = async (formDate : FormData) => {
-    console.log("🚀 ~ registerUser ~ formDate:", formDate)
- 
-    const {data} = await supabase.auth.getUser()
+    const origin = headers().get("origin");
+    const username = formDate.get("username") as string;
+    const email = formDate.get("email") as string;
+    const password = formDate.get("password") as string;
+    const supabase = createClient();
 
-    console.log('this is server action');
-    
-    const fullname = formDate.get('fullname')
-    console.log("🚀 ~ registerUser ~ fullname:", fullname)
-    const username = formDate.get('username')
-    console.log("🚀 ~ registerUser ~ username:", username)
+    const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options:{
+            data:{username: username, email:email,},
+            emailRedirectTo:`${origin}/auth/callback`,
+        },
+    })
 
-    console.log("🚀 ~ registerUser ~ user:", data?.user?.id)
-
-    // const res = await supabase.from('profiles').update({
-    //     full_name: fullname,
-    //     username: username,
-    //     updated_at: new Date(),
-    // }).eq('id',data?.user?.id).select()
-    // const res = await supabase.auth.updateUser({data:{username: username,full_name: fullname}})
-    // return res?.data
-}
+    if (error) {
+        return redirect("/login?message=Could not authenticate user");
+    }
+        return redirect("/login?message=Check email to continue sign in process");
+    }
