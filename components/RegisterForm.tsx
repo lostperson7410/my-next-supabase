@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { registerUser } from './formAction/registerAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, setUser } from '@/lib/features/userProfile/userProfileSlice';
+import { redirect } from 'next/navigation';
+import { data } from 'autoprefixer';
 
 export default function RegisterForm() {
 
@@ -12,14 +14,23 @@ export default function RegisterForm() {
     const userRudex = useSelector(selectUser)
 
     const handleSubmit = async (e :FormData) => {
-        const response = await registerUser(e)
-        dispatch(setUser(response?.user))
-    }
-
-    useEffect(() => {
-        console.log("userRudex: ",userRudex);
         
-    }, [userRudex]);
+        try {
+            const response = await registerUser(e)
+            if (response && response?.success) {
+                dispatch(setUser(response?.data))                
+                redirect("/login?message=Check email to continue sign in process")
+                
+            } else {
+                console.log('this is return error',response?.error);
+                redirect("/login?message=Could not authenticate user");
+            }
+        } catch (error) {
+            console.log('❌❌❌❌❌❌', error);
+            redirect("/login?message=Could not authenticate user");
+        }
+
+    }
 
     return (
         <div className=' ml-2 mr-2 flex-1 flex flex-col w-full'>

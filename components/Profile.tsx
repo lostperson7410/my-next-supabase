@@ -1,12 +1,49 @@
 'use client'
+import { selectUser, setUser } from '@/lib/features/userProfile/userProfileSlice';
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { UploadImageProfile } from './formAction/registerAction';
 
 const Profile = (props:any) => {
+
+    const {
+        isNavbar,
+        isCanUpload = true,
+        initalValues,
+        height,
+        width
+    } = props
+
+    const dispatch = useDispatch();
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
-    const handleFileChange = (event: { target: { files: any[]; }; }) => {
+    
+    useEffect(() => {
+
+        if (initalValues) {
+            setUpUserRedux()
+        }
+        // if(initalValues?.user_metadata?. ){
+        //     setSelectedFile(initalValues?.user_metadata?.avatar_url)
+        // }
+    }, [initalValues]);
+
+    const setUpUserRedux = () => {
+        dispatch(setUser(initalValues))
+    }
+    
+    
+    const handleFileChange = async (event: { target: { files: any[]; }; }) => {
         const file = event.target.files[0];
         const result = URL?.createObjectURL(file)
+        
+        try {
+            const res = await UploadImageProfile(event.target.files[0])
+            console.log("🚀 ~ handleFileChange ~ res:", res)
+        } catch (error) {
+            
+        }
+        
         setSelectedFile(result);
     };
 
@@ -14,19 +51,28 @@ const Profile = (props:any) => {
 
     //upload => get public url => set public url to state => state will return to form
 
+    const themeDefaults = {
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        gap: '10px'
+    }
+    const themeNav = {
+        display: 'flex', 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        gap: '10px'
+    }
+
+
     return (
-        <div style={{
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            gap: '20px'
-        
-        }}>
+        <div style={isNavbar ? themeNav : themeDefaults}>
             <div style={{
                 borderRadius: '50%', 
-                width: '100px', 
-                height: '100px', 
+                width: `${ width || '100px'}`, 
+                height: `${ height || '100px'}`, 
                 backgroundColor: 'white', 
                 position: 'relative', 
                 zIndex:2, 
@@ -49,6 +95,7 @@ const Profile = (props:any) => {
 
                 <input 
                     {...props}
+                    disabled={!isCanUpload}
                     id="fileInput"
                     type="file" 
                     accept=".png, .jpg" 
@@ -65,12 +112,26 @@ const Profile = (props:any) => {
                     }}
                 />
             </div>
-            <button 
-                className='border-2 border-green-700 text-white rounded-md px-4 py-2 text-foreground mb-2'
-                onClick={() => document.getElementById('fileInput')?.click()}
-            >
-                Upload Profile
-            </button>
+            {
+                initalValues?.user_metadata?.username && (
+                    <div>
+                        {
+                        initalValues?.user_metadata?.username
+                        }
+                    </div>
+                )
+            }
+            {
+                isCanUpload && (
+                    <div 
+                        className='cursor-pointer border-2 border-green-700 text-white rounded-md px-4 py-2 text-foreground mb-2'
+                        onClick={() => {
+                            document.getElementById('fileInput')?.click()}}
+                    >
+                        Upload Profile
+                    </div>
+                )
+            }
         </div>
     );
 };

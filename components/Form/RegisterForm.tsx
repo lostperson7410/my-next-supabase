@@ -12,7 +12,7 @@ export default function RegisterForm() {
             <form action={registerUser} className='flex w-full items-center justify-start flex-col gap-2'>
                 <div className='flex-row flex-wrap flex gap-10 items-start justify-center'>
                     <div className='flex-col flex'>
-                        <Profile name='profile'/>
+                        <Profile name='profile_file'/>
                     </div>
                     <div className='flex-col flex'>
                         <label className="text-md" htmlFor="password">

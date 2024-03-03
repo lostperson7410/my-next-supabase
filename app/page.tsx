@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import RegisterForm from "@/components/Form/RegisterForm";
 import SignInSignUpForm from "@/components/Form/SignInSignUpForm";
 import AuthButton from "@/components/AuthButton";
+import NavBar from "@/components/NavBar";
 
 export default async function Index() {
   const supabase = createClient();
@@ -13,9 +14,8 @@ export default async function Index() {
   
   return (
     <div>
-      <Header />
+     {/* <Header /> */}
       <h1>Welcome New user</h1>
-      <AuthButton/>
     </div>
   );
 }
