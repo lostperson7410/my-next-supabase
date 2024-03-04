@@ -1,8 +1,10 @@
 'use client'
 import { selectUser, setUser } from '@/lib/features/userProfile/userProfileSlice';
+import { supabase } from '@/utils/supabase/supabaseClient';
+import { isEmpty } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { UploadImageProfile } from './formAction/registerAction';
+import {v4 as uuidv4} from 'uuid'
 
 const Profile = (props:any) => {
 
@@ -11,7 +13,8 @@ const Profile = (props:any) => {
         isCanUpload = true,
         initalValues,
         height,
-        width
+        width,
+        onUpload
     } = props
 
     const dispatch = useDispatch();
@@ -33,19 +36,32 @@ const Profile = (props:any) => {
     }
     
     
-    const handleFileChange = async (event: { target: { files: any[]; }; }) => {
+    const handleFileChange = async (event:any) => {
         const file = event.target.files[0];
-        const result = URL?.createObjectURL(file)
-        
-        try {
-            const res = await UploadImageProfile(event.target.files[0])
-            console.log("🚀 ~ handleFileChange ~ res:", res)
-        } catch (error) {
-            
-        }
-        
-        setSelectedFile(result);
+        const res:any = await uploadImageProfile(file)
+        onUpload&&onUpload(res?.data?.publicUrl)
+        setSelectedFile(res?.data?.publicUrl);        
     };
+
+
+    const uploadImageProfile = async (file:File) => {
+        try {
+            const {data,error} = await supabase?.storage?.from("attachments").upload(uuidv4(),file)
+            if (isEmpty(error)) {
+                const url = await supabase.storage.from("attachments").getPublicUrl(data?.path)
+                if (isEmpty(url?.error)) {
+                    return {success:true , data: url?.data}
+                }else{
+                    return {success:false, error:'CANNOT_GET_IMAGE_URL'}
+                }
+            } else {
+                return {success:false, error:error}
+            }
+            
+        } catch (error) {
+            console.log('Something went wrong', error);
+        }
+    }
 
     //create a new function to upload a file to supabase then set a reponse public url to state object
 

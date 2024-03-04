@@ -7,12 +7,14 @@ import Profile from '../Profile';
 
 export default function RegisterForm() {
 
+    const [imageValue, setImageValue] = useState();
+
     return (
         <div className=' ml-2 mr-2 flex-1 flex flex-col w-full'>
-            <form action={registerUser} className='flex w-full items-center justify-start flex-col gap-2'>
+            <form action={(e)=>registerUser(e,imageValue)} className='flex w-full items-center justify-start flex-col gap-2'>
                 <div className='flex-row flex-wrap flex gap-10 items-start justify-center'>
                     <div className='flex-col flex'>
-                        <Profile name='profile_file'/>
+                        <Profile name='profile_file' onUpload={(e:any)=>setImageValue(e)}/>
                     </div>
                     <div className='flex-col flex'>
                         <label className="text-md" htmlFor="password">
