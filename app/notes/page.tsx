@@ -10,9 +10,7 @@ export default function Notes() {
   useEffect(() => {
     getNoteData();  
   }, []);
-  useEffect(() => {    
-    console.log('notes:',notes);
-    
+  useEffect(() => {        
     const channel = supabase
       .channel("create-event")
       .on(
