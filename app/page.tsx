@@ -16,6 +16,7 @@ export default async function Index() {
     <div>
      <Header />
      <h1 className=" text-2xl">🚨🚨============\\ Feature //=========== 🚨🚨</h1><br/>
+     <h1 className=" text-2xl">⭕️⭕️ Current Version : V 1.5 ⭕️⭕️</h1><br/>
      <h1 className="text-xl">✅ Login/Register</h1>
      <h1 className="text-xl">✅ Upload image</h1>
      <h1 className="text-xl">❌ Todolist</h1>
