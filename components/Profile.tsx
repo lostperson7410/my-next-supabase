@@ -48,7 +48,7 @@ const Profile = (props:any) => {
         try {
             const {data,error} = await supabase?.storage?.from("attachments").upload(uuidv4(),file)
             if (isEmpty(error)) {
-                const url = await supabase.storage.from("attachments").getPublicUrl(data?.path)
+                const url = await supabase?.storage?.from("attachments").getPublicUrl(data?.path)
                 if (isEmpty(url?.error)) {
                     return {success:true , data: url?.data}
                 }else{
