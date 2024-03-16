@@ -1,9 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 import Header from "@/components/Header";
-import RegisterForm from "@/components/Form/RegisterForm";
-import SignInSignUpForm from "@/components/Form/SignInSignUpForm";
-import AuthButton from "@/components/AuthButton";
-import NavBar from "@/components/NavBar";
 import {getTranslations} from 'next-intl/server';
 
 export default async function Index() {

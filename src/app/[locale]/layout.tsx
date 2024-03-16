@@ -1,8 +1,6 @@
-import { GeistSans } from "geist/font/sans";
-import "../globals.css";
-import StoreProvider from "../StoreProvider";
-import NavBar from "@/components/NavBar";
 import React from "react";
+import './locale.css'
+
 
 export default function LocaleLayout({
   children,
@@ -12,9 +10,8 @@ export default function LocaleLayout({
   params: {locale: string};
 
 }) {
-  console.log('locale:',locale);
   return (
-    <main className="min-h-screen flex flex-col items-center">
+    <main className="locale-Main-Container">
       {children}
     </main>
   );
