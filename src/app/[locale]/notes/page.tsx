@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { AllNotes } from "./api";
 
 export default function Notes() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<any>([]);
   useEffect(() => {
     getNoteData();  
   }, []);

@@ -15,17 +15,18 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+  params: {locale}
 }: {
   children: React.ReactNode;
-}) {
+  params: {locale: string};
+
+}) {  
   return (
       <StoreProvider>
-        <html lang="en" className={GeistSans.className}>
+        <html lang={locale} className={GeistSans?.className}>
           <body className="bg-background text-foreground">
           <NavBar/>
-            <main className="min-h-screen flex flex-col items-center">
-              {children}
-            </main>
+            {children}  
           </body>
         </html>
       </StoreProvider>

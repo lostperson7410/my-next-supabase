@@ -4,16 +4,21 @@ import RegisterForm from "@/components/Form/RegisterForm";
 import SignInSignUpForm from "@/components/Form/SignInSignUpForm";
 import AuthButton from "@/components/AuthButton";
 import NavBar from "@/components/NavBar";
+import {getTranslations} from 'next-intl/server';
 
 export default async function Index() {
   const supabase = createClient();
 
+
   const {data}:any =  await supabase.auth.getUser()
 
   console.log('data:',data);
+  const t = await getTranslations('Index');
+
   
   return (
     <div>
+      <p>{t('title')}</p>
      <Header />
      <h1 className=" text-2xl">🚨🚨============\\ Feature //=========== 🚨🚨</h1><br/>
      <h1 className=" text-2xl">⭕️⭕️ Current Version : V 1.5 ⭕️⭕️</h1><br/>
