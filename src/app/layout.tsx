@@ -25,7 +25,6 @@ export default function RootLayout({
       <StoreProvider>
         <html lang={locale} className={GeistSans?.className}>
           <body className="bg-background text-foreground">
-          <NavBar/>
             {children}  
           </body>
         </html>

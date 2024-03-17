@@ -1,24 +1,28 @@
 import Link from "next/link";
 import AuthButton from "./AuthButton";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { getTranslations } from "next-intl/server";
+import { getNextLocaleValue } from "@/utils/lang/language";
 
-const NavBar = async () => {
+const NavBar = async ({...props}) => {
 
+  // const languageByCookie = await getNextLocaleValue();
 
     const menu = [
         {
             name:'Home',
             title:'Home',
-            path:'/'
+            path:`/`
         },
         {
-            name:'About',
-            title:'About',
-            path:'/about'
+            name:'Register',
+            title:'Register',
+            path:`/register`
         },
         {
-            name:'Contact',
-            title:'Contact',
-            path:'/contact'
+            name:'Note',
+            title:'Note',
+            path:`/notes`
         },
     ]
 
@@ -28,9 +32,12 @@ const NavBar = async () => {
       <div className="flex gap-1 flex-row">
         {
             menu?.map((item,index)=> (
-                <Link key={index} href={item?.path}>{item?.title}</Link>
-            ))
-        }
+                <Link key={index} locale={false} href={`${item?.path}`}>{item?.title}{props?.lang}</Link>
+                ))
+              }
+      </div>
+      <div>
+        <LanguageSwitcher/>
       </div>
 
       <div>
