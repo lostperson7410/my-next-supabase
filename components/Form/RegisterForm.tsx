@@ -5,10 +5,9 @@ import { useState } from 'react';
 import { registerUser } from '../formAction/registerAction';
 import Profile from '../Profile';
 
-export default function RegisterForm() {
-
+export default function RegisterForm(props:any) {
+console.log("🚀 ~ RegisterForm ~ props:", props)
     const [imageValue, setImageValue] = useState();
-
     return (
         <div className=' ml-2 mr-2 flex-1 flex flex-col w-full'>
             <form action={(e)=>registerUser(e,imageValue)} className='flex w-full items-center justify-start flex-col gap-2'>

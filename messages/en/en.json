@@ -1,6 +1,7 @@
 {
     "Index": {
       "title": "Hello world!",
-      "currentVersion": "Current Version"
+      "currentVersion": "Current Version",
+      "username":"Username"
     }
   }
